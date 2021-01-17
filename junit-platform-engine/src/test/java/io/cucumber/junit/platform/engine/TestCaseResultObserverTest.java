@@ -7,6 +7,7 @@ import io.cucumber.plugin.event.Location;
 import io.cucumber.plugin.event.PickleStepTestStep;
 import io.cucumber.plugin.event.Result;
 import io.cucumber.plugin.event.SnippetsSuggestedEvent;
+import io.cucumber.plugin.event.SnippetsSuggestedEvent.Suggestion;
 import io.cucumber.plugin.event.Status;
 import io.cucumber.plugin.event.Step;
 import io.cucumber.plugin.event.StepArgument;
@@ -215,10 +216,11 @@ class TestCaseResultObserverTest {
             uri,
             testCase.getLocation(),
             testStep.getStep().getLocation(),
-            asList(
-                "mocked snippet 1",
-                "mocked snippet 2",
-                "mocked snippet 3")));
+            new Suggestion(testStep.getStep().getText(),
+                asList(
+                    "mocked snippet 1",
+                    "mocked snippet 2",
+                    "mocked snippet 3"))));
         Result result = new Result(Status.UNDEFINED, Duration.ZERO, null);
         bus.send(new TestStepFinished(Instant.now(), testCase, testStep, result));
         bus.send(new TestCaseFinished(Instant.now(), testCase, result));

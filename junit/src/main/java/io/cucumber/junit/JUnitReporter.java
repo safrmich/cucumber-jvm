@@ -55,8 +55,8 @@ final class JUnitReporter {
     private void handleSnippetSuggested(SnippetsSuggestedEvent snippetsSuggestedEvent) {
         snippetsPerStep.putIfAbsent(new StepLocation(
             snippetsSuggestedEvent.getUri(),
-            snippetsSuggestedEvent.getStepLine()),
-            snippetsSuggestedEvent.getSnippets());
+            snippetsSuggestedEvent.getStepLocation().getLine()),
+            snippetsSuggestedEvent.getSuggestion().getSnippets());
     }
 
     void finishExecutionUnit() {

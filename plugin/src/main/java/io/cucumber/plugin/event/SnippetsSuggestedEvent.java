@@ -15,21 +15,28 @@ public final class SnippetsSuggestedEvent extends TimeStampedEvent {
     private final URI uri;
     private final Location scenarioLocation;
     private final Location stepLocation;
-    private final List<String> snippets;
+    private final Suggestion suggestion;
 
     @Deprecated
     public SnippetsSuggestedEvent(Instant timeInstant, URI uri, int scenarioLine, int stepLine, List<String> snippets) {
         this(timeInstant, uri, new Location(scenarioLine, -1), new Location(stepLine, -1), snippets);
     }
 
+    @Deprecated
     public SnippetsSuggestedEvent(
             Instant instant, URI uri, Location scenarioLocation, Location stepLocation, List<String> snippets
+    ) {
+        this(instant, uri, scenarioLocation, stepLocation, new Suggestion("", snippets));
+    }
+
+    public SnippetsSuggestedEvent(
+            Instant instant, URI uri, Location scenarioLocation, Location stepLocation, Suggestion suggestion
     ) {
         super(instant);
         this.uri = requireNonNull(uri);
         this.scenarioLocation = scenarioLocation;
         this.stepLocation = stepLocation;
-        this.snippets = unmodifiableList(requireNonNull(snippets));
+        this.suggestion = requireNonNull(suggestion);
     }
 
     public URI getUri() {
@@ -54,8 +61,32 @@ public final class SnippetsSuggestedEvent extends TimeStampedEvent {
         return stepLocation;
     }
 
+    @Deprecated
     public List<String> getSnippets() {
-        return snippets;
+        return suggestion.getSnippets();
     }
 
+    public Suggestion getSuggestion() {
+        return suggestion;
+    }
+
+    public static final class Suggestion {
+
+        final String step;
+        final List<String> snippets;
+
+        public Suggestion(String step, List<String> snippets) {
+            this.step = requireNonNull(step);
+            this.snippets = unmodifiableList(requireNonNull(snippets));
+        }
+
+        public String getStep() {
+            return step;
+        }
+
+        public List<String> getSnippets() {
+            return snippets;
+        }
+
+    }
 }
