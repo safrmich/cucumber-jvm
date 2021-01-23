@@ -43,6 +43,13 @@
             "old": "interface io.cucumber.messages.internal.com.google.protobuf.MutabilityOracle",
             "new": "interface io.cucumber.messages.internal.com.google.protobuf.MutabilityOracle",
             "justification": "Internal API"
+          },
+          {
+            "ignore": true,
+            "code": "java.method.numberOfParametersChanged",
+            "old": "method void io.cucumber.core.runtime.ObjectFactoryServiceLoader::<init>(io.cucumber.core.backend.Options)",
+            "new": "method void io.cucumber.core.runtime.ObjectFactoryServiceLoader::<init>(java.util.function.Supplier<java.lang.ClassLoader>, io.cucumber.core.backend.Options)",
+            "justification": "Internal API"
           }
         ]
       }
